@@ -57,7 +57,7 @@ Setup & Tips
   emamaux-ghci:proj-load-[buffer|file] if project settings are
   changed. However, this can be done manually:
 
-    M-x emacs-ghci:proj-sync
+    M-x emamux-ghci:proj-sync
 
   Example keybindings (assuming use with haskell-mode): 
 
