@@ -19,7 +19,7 @@ Why?
 
 * Dodge Configuration Hell, Simplify the GHCI Presentation Problem
 
-    This lib is useful as a hedge against a potential maintenance shortfall for [inferior-haskell](https://github.com/haskell/haskell-mode/wiki/Inferior-Haskell-Mode) or in the event of unresolvable config issues with inferior-haskell. There is still a need to use GHCI for its features such as color handling and completion, and that is somewhat of a moving target with respect to the rest of the Emacs ecosystem.
+    This is useful as a hedge against a potential maintenance gap/shortfall for [inferior-haskell](https://github.com/haskell/haskell-mode/wiki/Inferior-Haskell-Mode) or in the event of unresolvable config issues with inferior-haskell. There is also still a need to use GHCI directly for its features such as color handling and completion, and that is somewhat of a moving target with respect to the rest of the Emacs ecosystem.
 
 Installation
 ============
@@ -48,13 +48,13 @@ Setup & Tips
     ; Note, "haskell:ghci" is the default
     (setq emamux-ghci:tmux-address "haskell:ghci")
 
-  Add haskell module specific settings:
+  Add haskell module (or project) specific settings:
 
     (setq emamux-ghci:includes '("src" "tests"))
     (setq emamux-ghci:exts '("UnicodeSyntax" "GADTs"))
 
   Note, a <i>emamux-ghci:proj-sync</i> is performed on
-  emamaux-ghci:proj-load-[buffer|file] if project settings are
+  emamaux-ghci:proj-load-[buffer|file] if project settings have been
   changed. However, this can be done manually:
 
     M-x emamux-ghci:proj-sync
