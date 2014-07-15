@@ -54,7 +54,7 @@ Setup & Tips
     (setq emamux-ghci:exts '("UnicodeSyntax" "GADTs"))
 
   Note, a <i>emamux-ghci:proj-sync</i> is performed on
-  emamaux-ghci:proj-load-[buffer|file] if project settings have been
+  emamux-ghci:proj-load-[buffer|file] if project settings have been
   changed. However, this can be done manually:
 
     M-x emamux-ghci:proj-sync
