@@ -43,7 +43,7 @@ Setup & Tips
 
      $ tmux new-session -n ghci -s haskell 'cabal repl'
 
-  Tell emamux-ghc where to find the address to the tmux session:
+  Tell emamux-ghci where to find the address to the tmux session:
 
     ; Note, "haskell:ghci" is the default
     (setq emamux-ghci:tmux-address "haskell:ghci")
