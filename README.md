@@ -26,9 +26,7 @@ Why?
 * Quickcheck Test-Driven Development
 
   This is seeing regular use with Quickcheck's test runners, of which
-  output terminal specific coloring for their results. For an example of
-  how this can boost your TDD workflow, see the following
-  [script setup](http://www.github.com/jfeltz/emacs.d/blob/master/lang/haskell-emamux.el).
+  output terminal specific coloring for their results.
 
 Installation
 ============
@@ -64,9 +62,9 @@ Setup & Tips
 ```
 
   Tell emamux-ghci where to find the tmux session:
-
-    ; Note, "haskell:ghci" is the default
+  
 ```lisp
+    ; Note, "haskell:ghci" is the default
     (setq emamux-ghci:tmux-address "haskell:ghci")
 ```
 
