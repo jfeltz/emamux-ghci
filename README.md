@@ -17,9 +17,18 @@ Why?
 
     Allows for the shared use of a single GHCI session by multiple editors (E.g. Emacs, Vim, Eclipse)
 
-* Dodge Configuration Hell, Simplify the GHCI Presentation Problem
+* Separate GHCI to avoid dealing with process lock-ups in Emacs 
+
+* Dodge Configuration Hell. Simplify the GHCI Presentation Problem
 
     This is useful as a hedge against a potential maintenance gap/shortfall for [inferior-haskell](https://github.com/haskell/haskell-mode/wiki/Inferior-Haskell-Mode) or in the event of unresolvable config issues with inferior-haskell. There is also still a need to use GHCI directly for its features such as color handling and completion, and that is somewhat of a moving target with respect to the rest of the Emacs ecosystem.
+
+* Quickcheck Test-Driven Development
+
+  This is seeing regular use with Quickcheck's test runners, of which
+  output terminal specific coloring for their results. For an example of
+  how this can boost your TDD workflow, see the following
+  [script setup](http://www.github.com/jfeltz/emacs.d/blob/master/lang/haskell-emamux.el).
 
 Installation
 ============
@@ -43,10 +52,23 @@ Setup & Tips
 
      $ tmux new-session -n ghci -s haskell 'cabal repl'
 
+  or with the following elisp:
+
+```lisp
+(start-process
+   "unused"
+   nil
+   "xterm"
+   "-e" "tmux" "new-session" "-n" "ghci" "-s" "haskell" "cabal repl"
+  )
+```
+
   Tell emamux-ghci where to find the tmux session:
 
     ; Note, "haskell:ghci" is the default
+```lisp
     (setq emamux-ghci:tmux-address "haskell:ghci")
+```
 
   Add haskell module (or project) specific settings:
 
@@ -62,3 +84,7 @@ Setup & Tips
   Example keybindings (assuming use with haskell-mode): 
 
     (define-key haskell-mode-map [f2] 'emamux-ghci:proj-load-buffer)
+
+TODO 
+====
+defvar tracking of last loaded buffer can be used to issue :reload instead
