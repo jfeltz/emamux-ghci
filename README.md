@@ -62,8 +62,8 @@ Setup & Tips
 
   Tell emamux-ghci where to find the tmux session:
 
-    ; Note, "haskell:ghci" is the default
 ```lisp
+    ; Note, "haskell:ghci" is the default
     (setq emamux-ghci:tmux-address "haskell:ghci")
 ```
 
