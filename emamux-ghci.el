@@ -25,14 +25,10 @@
 (require 's)
 
 (defvar emamux-ghci:includes
-  nil
-  "ghc include directories, e.g. (\"src\" \"tests\")"
-  )
-
+  nil "ghc include directories, e.g. (\"src\" \"tests\")")
 (defvar emamux-ghci:exts
-  nil
-  "ghc language extensions, e.g. (\"GADTs\", \"UnicodeSyntax\")"
-  )
+  nil "ghc language extensions, e.g. (\"GADTs\", \"UnicodeSyntax\")")
+
 (defvar last-proj-exts nil "used for tracking sync state")
 (defvar last-proj-includes nil "used for tracking sync state")
 (make-local-variable 'last-proj-exts)
@@ -50,21 +46,16 @@
   )
 
 (defun exts-arg (strings removal)
-  "given a list of language extensions, format an argument to ghci :set"  
+  "given a list of language extensions, format an argument to ghci :set"
   (if (eq strings nil) nil
     (let ((prefix (if removal "No" "")))
-      (s-join " " (mapcar (lambda (ext) (concat "-X" prefix ext)) strings))
-      )
-    )
-  )
+      (s-join " " (mapcar (lambda (ext) (concat "-X" prefix ext)) strings)))))
 
 (defun emamux-ghci:issue-set (args addr)
   (if
     (eq args nil)
-    (message "emamux-ghci: ghci session unchanged") 
-    (emamux-ghci:issue-cmd (concat ":set " args) addr)
-    )
-  )
+    (message "emamux-ghci: ghci session unchanged")
+    (emamux-ghci:issue-cmd (concat ":set " args) addr)))
 
 (defun emamux-ghci:issue-cmd (cmd addr)
   "enter the command and issue the necessary carriage return in ghci"
@@ -75,7 +66,7 @@
 (defun emamux-ghci:clear-exts (exts addr)
    (if exts (emamux-ghci:issue-set (exts-arg exts t) addr) nil)
   )
-(defun emamux-ghci:clear-includes (addr) 
+(defun emamux-ghci:clear-includes (addr)
    (emamux-ghci:issue-set "-i" addr)
   )
 
@@ -83,23 +74,20 @@
   "given a filepath, load a Haskell module file in ghci"
   (if
     (eq fp nil)
-    (error "nil filepath provided to emamux-ghci:load-file") 
+    (error "nil filepath provided to emamux-ghci:load-file")
     (emamux-ghci:issue-cmd (concat ":load " fp) addr)
-    )
-  )
+    ))
 
 (defun emamux-ghci:sync-includes (includes addr)
-  (if includes (emamux-ghci:issue-set (include-arg includes) addr) nil)
-  )
+  (if includes (emamux-ghci:issue-set (include-arg includes) addr) nil))
+
 (defun emamux-ghci:sync-exts (exts addr)
-  (if exts (emamux-ghci:issue-set (exts-arg exts) addr) nil)
-  )
- 
+  (if exts (emamux-ghci:issue-set (exts-arg exts nil) addr) nil))
+
 (defun emamux-ghci:proj-sync (&optional force)
   "if project settings have changed, remove the old ones, bring in new ones
-  A note ghci crashes and force param:
-    (force) applies settings anyway, even if the internal state thinks
-  they're already applied."
+  Note: (force) applies settings anyway, even if emamux-ghci thinks they're
+  already applied."
   (interactive)
 
   (if
@@ -109,25 +97,18 @@
       (emamux-ghci:issue-set (exts-arg emamux-ghci:exts nil) emamux-ghci:tmux-address)
 
       ; update the sync state for exts
-      (setq last-proj-exts emamux-ghci:exts)
-     )
-    nil
-    )
+      (setq last-proj-exts emamux-ghci:exts))
+    nil)
   (if
     (or force (not (equal last-proj-includes emamux-ghci:includes)))
     (progn ; update the includes
       (emamux-ghci:clear-includes emamux-ghci:tmux-address)
-      (emamux-ghci:issue-set
-       (include-arg emamux-ghci:includes)
-       emamux-ghci:tmux-address
-       )
+      (emamux-ghci:issue-set (include-arg emamux-ghci:includes)
+       emamux-ghci:tmux-address)
 
       ; update the sync state for includes
-      (setq last-proj-includes emamux-ghci:includes)
-     )
-    nil
-    )
-  )
+      (setq last-proj-includes emamux-ghci:includes))
+    nil))
 
 (defun emamux-ghci:proj-load-file (fp)
   "Load the file path provided into ghci. If a previous sync hasn't
@@ -141,8 +122,7 @@
   "resolve the path of the buffer being edited, and load that into ghci"
   (interactive)
   (emamux-ghci:proj-load-file buffer-file-name)
-  (message "emamux-ghci: loaded buffer")
-  )
+  (message "emamux-ghci: loaded buffer"))
 
 (provide 'emamux-ghci)
 ;;; emamux-ghci.el ends here
